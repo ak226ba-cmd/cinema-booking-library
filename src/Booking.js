@@ -28,4 +28,28 @@ export class Booking {
     this.isActive = true
     return true
   }
+
+  /**
+   * Cancels the booking.
+   *
+   * @returns {boolean} True if the booking was cancelled.
+   */
+  cancel() {
+    if (!this.isActive) {
+      return false
+    }
+
+    this.seat.cancel()
+    this.isActive = false
+    return true
+  }
+
+  /**
+   * Returns information about the booking.
+   *
+   * @returns {string} A readable booking summary.
+   */
+  getSummary() {
+    return `${this.customerName} - ${this.screening.movieTitle} - ${this.seat.getSeatLabel()}`
+  }
 }
