@@ -27,4 +27,18 @@ export class Seat {
     this.isBooked = true
     return true
   }
+
+    /**
+   * @returns {boolean} True if the seat is available.
+   */
+  isAvailable() {
+    return !this.isBooked
+  }
+
+  /**
+   * @returns {string} The seat label, for example "A5".
+   */
+  getSeatLabel() {
+    return `${this.row}${this.number}`
+  }
 }
