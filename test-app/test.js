@@ -1,5 +1,6 @@
 import { Seat } from '../src/Seat.js'
 import { Screening } from '../src/Screening.js'
+import { Booking } from '../src/Booking.js'
 
 // Test the Seat class.
 const seat = new Seat('A', 5)
@@ -31,3 +32,18 @@ selectedSeat.book()
 
 console.log('Available seats after booking:', screening.getAvailableSeats().length)
 console.log('Booked seats:', screening.getBookedSeatCount())
+
+console.log('--------------------')
+
+// Test the Booking class.
+const bookingSeat = screening.getSeat('A', 1)
+const booking = new Booking('Ahmed', screening, bookingSeat)
+
+console.log('Booking summary:', booking.getSummary())
+console.log('Confirm booking:', booking.confirm())
+console.log('Booking active:', booking.isActive)
+console.log('Seat available after booking:', bookingSeat.isAvailable())
+
+console.log('Cancel booking:', booking.cancel())
+console.log('Booking active after cancel:', booking.isActive)
+console.log('Seat available after cancel:', bookingSeat.isAvailable())
