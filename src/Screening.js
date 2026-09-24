@@ -34,4 +34,55 @@ export class Screening {
       }
     }
   }
+
+  /**
+   * Finds a seat by row and number.
+   *
+   * @param {string} row - The seat row.
+   * @param {number} number - The seat number.
+   * @returns {Seat|null} The matching seat or null if not found.
+   */
+  getSeat(row, number) {
+    for (const seat of this.seats) {
+      if (seat.row === row && seat.number === number) {
+        return seat
+      }
+    }
+
+    return null
+  }
+
+  /**
+   * Returns all available seats.
+   *
+   * @returns {Seat[]} An array of available seats.
+   */
+  getAvailableSeats() {
+    const availableSeats = []
+
+    for (const seat of this.seats) {
+      if (seat.isAvailable()) {
+        availableSeats.push(seat)
+      }
+    }
+
+    return availableSeats
+  }
+
+  /**
+   * Returns the number of booked seats.
+   *
+   * @returns {number} The number of booked seats.
+   */
+  getBookedSeatCount() {
+    let bookedSeats = 0
+
+    for (const seat of this.seats) {
+      if (!seat.isAvailable()) {
+        bookedSeats++
+      }
+    }
+
+    return bookedSeats
+  }
 }
