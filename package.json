@@ -2,9 +2,10 @@
   "name": "cinema-booking-library",
   "version": "1.0.0",
   "description": "A JavaScript library for managing cinema seats, bookings and ticket prices.",
-  "main": "index.js",
+  "type": "module",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test-app/test.js"
   },
   "repository": {
     "type": "git",
@@ -12,8 +13,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ak226ba-cmd/cinema-booking-library/issues"
   },

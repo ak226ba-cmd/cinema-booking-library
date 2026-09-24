@@ -28,7 +28,21 @@ export class Seat {
     return true
   }
 
-    /**
+  /**
+   * Cancels the booking.
+   *
+   * @returns {boolean} True if the booking was cancelled.
+   */
+  cancel() {
+    if (!this.isBooked) {
+      return false
+    }
+
+    this.isBooked = false
+    return true
+  }
+
+  /**
    * @returns {boolean} True if the seat is available.
    */
   isAvailable() {
