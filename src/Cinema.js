@@ -40,4 +40,45 @@ export class Cinema {
 
     return matchingScreenings
   }
+
+  /**
+   * Adds a confirmed booking.
+   *
+   * @param {object} booking - The booking to add.
+   * @returns {boolean} True if the booking was added.
+   */
+  addBooking(booking) {
+    if (!booking || !booking.isActive) {
+      return false
+    }
+
+    this.bookings.push(booking)
+    return true
+  }
+
+  /**
+   * Returns all active bookings.
+   *
+   * @returns {object[]} Active bookings.
+   */
+  getActiveBookings() {
+    const activeBookings = []
+
+    for (const booking of this.bookings) {
+      if (booking.isActive) {
+        activeBookings.push(booking)
+      }
+    }
+
+    return activeBookings
+  }
+
+  /**
+   * Returns the total number of screenings.
+   *
+   * @returns {number} Number of screenings.
+   */
+  getScreeningCount() {
+    return this.screenings.length
+  }
 }

@@ -2,6 +2,7 @@ import { Seat } from '../src/Seat.js'
 import { Screening } from '../src/Screening.js'
 import { Booking } from '../src/Booking.js'
 import { PriceCalculator } from '../src/PriceCalculator.js'
+import { Cinema } from '../src/Cinema.js'
 
 // Test the Seat class.
 const seat = new Seat('A', 5)
@@ -60,3 +61,26 @@ console.log('Senior standard:', priceCalculator.calculatePrice(120, 70, 'standar
 console.log('Adult premium:', priceCalculator.calculatePrice(120, 30, 'premium'))
 console.log('Child has discount:', priceCalculator.hasAgeDiscount(10))
 console.log('Adult has discount:', priceCalculator.hasAgeDiscount(30))
+
+console.log('--------------------')
+
+// Test the Cinema class.
+const cinema = new Cinema('Filmstaden')
+
+cinema.addScreening(screening)
+
+console.log('Cinema name:', cinema.name)
+console.log('Screening count:', cinema.getScreeningCount())
+console.log(
+  'Interstellar screenings:',
+  cinema.findScreeningsByMovie('Interstellar').length
+)
+
+// Create and confirm a new booking.
+const cinemaSeat = screening.getSeat('C', 2)
+const cinemaBooking = new Booking('Sara', screening, cinemaSeat)
+
+cinemaBooking.confirm()
+cinema.addBooking(cinemaBooking)
+
+console.log('Active bookings:', cinema.getActiveBookings().length)
