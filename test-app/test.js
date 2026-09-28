@@ -1,6 +1,7 @@
 import { Seat } from '../src/Seat.js'
 import { Screening } from '../src/Screening.js'
 import { Booking } from '../src/Booking.js'
+import { PriceCalculator } from '../src/PriceCalculator.js'
 
 // Test the Seat class.
 const seat = new Seat('A', 5)
@@ -47,3 +48,15 @@ console.log('Seat available after booking:', bookingSeat.isAvailable())
 console.log('Cancel booking:', booking.cancel())
 console.log('Booking active after cancel:', booking.isActive)
 console.log('Seat available after cancel:', bookingSeat.isAvailable())
+
+console.log('--------------------')
+
+// Test the PriceCalculator class.
+const priceCalculator = new PriceCalculator()
+
+console.log('Adult standard:', priceCalculator.calculatePrice(120, 30, 'standard'))
+console.log('Child standard:', priceCalculator.calculatePrice(120, 10, 'standard'))
+console.log('Senior standard:', priceCalculator.calculatePrice(120, 70, 'standard'))
+console.log('Adult premium:', priceCalculator.calculatePrice(120, 30, 'premium'))
+console.log('Child has discount:', priceCalculator.hasAgeDiscount(10))
+console.log('Adult has discount:', priceCalculator.hasAgeDiscount(30))
