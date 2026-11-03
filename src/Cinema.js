@@ -1,30 +1,50 @@
+
 /**
  * Manages cinema screenings and bookings.
  */
 export class Cinema {
+  #screenings = []
+  #bookings = []
+
   constructor(name) {
     this.name = name
-    this.screenings = []
-    this.bookings = []
+  }
+
+  /**
+   * Returns a copy of all screenings.
+   *
+   * @returns {object[]} The screenings.
+   */
+  get screenings() {
+    return [...this.#screenings]
+  }
+
+  /**
+   * Returns a copy of all bookings.
+   *
+   * @returns {object[]} The bookings.
+   */
+  get bookings() {
+    return [...this.#bookings]
   }
 
   /**
    * Adds a screening to the cinema.
    *
    * @param {object} screening - The screening to add.
-   * @returns {boolean} True if the screening was added.
+   * @returns {boolean} True if added.
    */
   addScreening(screening) {
     if (!screening) {
       return false
     }
 
-    this.screenings.push(screening)
+    this.#screenings.push(screening)
     return true
   }
 
   /**
-   * Returns all screenings for a specific movie.
+   * Finds screenings for a specific movie.
    *
    * @param {string} movieTitle - The movie title.
    * @returns {object[]} Matching screenings.
@@ -32,7 +52,7 @@ export class Cinema {
   findScreeningsByMovie(movieTitle) {
     const matchingScreenings = []
 
-    for (const screening of this.screenings) {
+    for (const screening of this.#screenings) {
       if (screening.movieTitle === movieTitle) {
         matchingScreenings.push(screening)
       }
@@ -45,14 +65,14 @@ export class Cinema {
    * Adds a confirmed booking.
    *
    * @param {object} booking - The booking to add.
-   * @returns {boolean} True if the booking was added.
+   * @returns {boolean} True if added.
    */
   addBooking(booking) {
     if (!booking || !booking.isActive) {
       return false
     }
 
-    this.bookings.push(booking)
+    this.#bookings.push(booking)
     return true
   }
 
@@ -64,7 +84,7 @@ export class Cinema {
   getActiveBookings() {
     const activeBookings = []
 
-    for (const booking of this.bookings) {
+    for (const booking of this.#bookings) {
       if (booking.isActive) {
         activeBookings.push(booking)
       }
@@ -74,11 +94,11 @@ export class Cinema {
   }
 
   /**
-   * Returns the total number of screenings.
+   * Returns the number of screenings.
    *
    * @returns {number} Number of screenings.
    */
   getScreeningCount() {
-    return this.screenings.length
+    return this.#screenings.length
   }
 }

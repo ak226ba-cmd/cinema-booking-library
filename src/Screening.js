@@ -1,36 +1,40 @@
+
 import { Seat } from './Seat.js'
 
 /**
  * Represents a cinema screening with seats.
  */
 export class Screening {
-  /**
-   * @param {string} movieTitle - The title of the movie.
-   * @param {string} startTime - The start time of the screening.
-   * @param {number} rows - Number of seat rows.
-   * @param {number} seatsPerRow - Number of seats in each row.
-   */
+  #seats = []
+
   constructor(movieTitle, startTime, rows, seatsPerRow) {
     this.movieTitle = movieTitle
     this.startTime = startTime
-    this.seats = []
+    this.#createSeats(rows, seatsPerRow)
+  }
 
-    this.createSeats(rows, seatsPerRow)
+  /**
+   * Returns a copy of all seats.
+   *
+   * @returns {Seat[]} The screening seats.
+   */
+  get seats() {
+    return [...this.#seats]
   }
 
   /**
    * Creates the seats for the screening.
    *
    * @param {number} rows - Number of rows.
-   * @param {number} seatsPerRow - Number of seats in each row.
+   * @param {number} seatsPerRow - Seats in each row.
    */
-  createSeats(rows, seatsPerRow) {
+  #createSeats(rows, seatsPerRow) {
     for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
       const rowLetter = String.fromCharCode(65 + rowIndex)
 
       for (let seatNumber = 1; seatNumber <= seatsPerRow; seatNumber++) {
         const seat = new Seat(rowLetter, seatNumber)
-        this.seats.push(seat)
+        this.#seats.push(seat)
       }
     }
   }
@@ -40,10 +44,10 @@ export class Screening {
    *
    * @param {string} row - The seat row.
    * @param {number} number - The seat number.
-   * @returns {Seat|null} The matching seat or null if not found.
+   * @returns {Seat|null} The matching seat or null.
    */
   getSeat(row, number) {
-    for (const seat of this.seats) {
+    for (const seat of this.#seats) {
       if (seat.row === row && seat.number === number) {
         return seat
       }
@@ -55,12 +59,12 @@ export class Screening {
   /**
    * Returns all available seats.
    *
-   * @returns {Seat[]} An array of available seats.
+   * @returns {Seat[]} The available seats.
    */
   getAvailableSeats() {
     const availableSeats = []
 
-    for (const seat of this.seats) {
+    for (const seat of this.#seats) {
       if (seat.isAvailable()) {
         availableSeats.push(seat)
       }
@@ -72,12 +76,12 @@ export class Screening {
   /**
    * Returns the number of booked seats.
    *
-   * @returns {number} The number of booked seats.
+   * @returns {number} The booked seat count.
    */
   getBookedSeatCount() {
     let bookedSeats = 0
 
-    for (const seat of this.seats) {
+    for (const seat of this.#seats) {
       if (!seat.isAvailable()) {
         bookedSeats++
       }
