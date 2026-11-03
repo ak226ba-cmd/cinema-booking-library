@@ -1,3 +1,4 @@
+
 import {
   Seat,
   Screening,
@@ -145,8 +146,8 @@ if (!booking.isActive && bookingSeat.isAvailable()) {
 console.log('--------------------')
 console.log('=== PRICE CALCULATOR TESTS ===')
 
-// Test the PriceCalculator class.
-const priceCalculator = new PriceCalculator()
+// Test the PriceCalculator class with configurable prices.
+const priceCalculator = new PriceCalculator({ premium: 50 })
 
 if (priceCalculator.calculatePrice(120, 30, 'standard') === 120) {
   console.log('PASS - Adult standard price is 120')
@@ -182,6 +183,24 @@ if (!priceCalculator.hasAgeDiscount(30)) {
   console.log('PASS - Adult does not receive age discount')
 } else {
   console.log('FAIL - Adult should not receive age discount')
+}
+
+// Test that premium prices can be configured.
+const customPriceCalculator = new PriceCalculator({ premium: 25 })
+
+if (customPriceCalculator.calculatePrice(120, 30, 'premium') === 145) {
+  console.log('PASS - Custom premium surcharge is applied')
+} else {
+  console.log('FAIL - Custom premium surcharge')
+}
+
+// Test that no surcharge is added when none is configured.
+const noSurchargeCalculator = new PriceCalculator()
+
+if (noSurchargeCalculator.calculatePrice(120, 30, 'premium') === 120) {
+  console.log('PASS - No surcharge without configuration')
+} else {
+  console.log('FAIL - Unexpected premium surcharge')
 }
 
 console.log('--------------------')
@@ -223,10 +242,7 @@ if (cinema.addBooking(cinemaBooking)) {
 if (cinema.getActiveBookings().length === 1) {
   console.log('PASS - Cinema has one active booking')
 } else {
-  console.log(
-    'FAIL - Active bookings:',
-    cinema.getActiveBookings().length
-  )
+  console.log('FAIL - Cinema should have one active booking')
 }
 
 console.log('--------------------')

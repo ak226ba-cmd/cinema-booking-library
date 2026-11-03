@@ -1,7 +1,17 @@
+
 /**
  * Calculates ticket prices for cinema bookings.
  */
 export class PriceCalculator {
+  #seatSurcharges
+
+  /**
+   * @param {object} seatSurcharges - Extra prices by seat type.
+   */
+  constructor(seatSurcharges = {}) {
+    this.#seatSurcharges = { ...seatSurcharges }
+  }
+
   /**
    * Calculates the ticket price.
    *
@@ -19,18 +29,16 @@ export class PriceCalculator {
       price *= 0.7
     }
 
-    if (seatType === 'premium') {
-      price += 50
-    }
+    const surcharge = this.#seatSurcharges[seatType] ?? 0
 
-    return price
+    return price + surcharge
   }
 
   /**
    * Checks if the customer gets an age discount.
    *
    * @param {number} age - The customer's age.
-   * @returns {boolean} True if the customer gets a discount.
+   * @returns {boolean} True if a discount applies.
    */
   hasAgeDiscount(age) {
     return age < 12 || age >= 65
