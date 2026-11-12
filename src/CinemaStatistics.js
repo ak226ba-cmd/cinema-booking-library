@@ -96,4 +96,39 @@ export class CinemaStatistics {
         isActive: booking.isActive
       }))
   }
+
+  /**
+   * Builds one screening's seat statistics.
+   *
+   * @param {object} screening - A cinema screening.
+   * @returns {object} Statistics about the screening.
+   */
+  #createScreeningStatistics(screening) {
+    const totalSeats = screening.seats.length
+    const bookedSeats = screening.getBookedSeatCount()
+
+    return {
+      movieTitle: screening.movieTitle,
+      startTime: screening.startTime,
+      totalSeats,
+      bookedSeats,
+      availableSeats: totalSeats - bookedSeats,
+      occupancyPercentage: this.#calculateOccupancyPercentage(bookedSeats, totalSeats)
+    }
+  }
+
+  /**
+   * Converts occupancy to a percentage with two decimals.
+   *
+   * @param {number} bookedSeats - Number of booked seats.
+   * @param {number} totalSeats - Total number of seats.
+   * @returns {number} Occupancy percentage.
+   */
+  #calculateOccupancyPercentage(bookedSeats, totalSeats) {
+    if (totalSeats === 0) {
+      return 0
+    }
+
+    return Math.round((bookedSeats / totalSeats) * 10000) / 100
+  }
 }
