@@ -53,4 +53,47 @@ export class CinemaStatistics {
       activeBookings: this.#cinema.getActiveBookings().length
     }
   }
+
+  /**
+   * Returns the screening with the most booked seats, or null.
+   * Ties are resolved by keeping the first screening.
+   *
+   * @returns {object|null} The screening statistics or null.
+   */
+  getMostBookedScreening() {
+    const screenings = this.getScreeningStatistics()
+
+    if (screenings.length === 0) {
+      return null
+    }
+
+    let mostBooked = screenings[0]
+
+    for (const screening of screenings.slice(1)) {
+      if (screening.bookedSeats > mostBooked.bookedSeats) {
+        mostBooked = screening
+      }
+    }
+
+    return mostBooked
+  }
+
+  /**
+   * Returns recorded booking summaries for a named customer.
+   *
+   * @param {string} customerName - Exact customer name.
+   * @returns {object[]} Booking summaries and active statuses.
+   */
+  getCustomerBookingSummaries(customerName) {
+    if (typeof customerName !== 'string' || customerName.trim() === '') {
+      return []
+    }
+
+    return this.#cinema.bookings
+      .filter(booking => booking.customerName === customerName)
+      .map(booking => ({
+        summary: booking.getSummary(),
+        isActive: booking.isActive
+      }))
+  }
 }
